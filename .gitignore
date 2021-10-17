@@ -131,5 +131,5 @@ dmypy.json
 .vscode/
 .idea/
 
-# Ignore the secrets file
+#Ignore secrets file
 config/secrets.yaml
