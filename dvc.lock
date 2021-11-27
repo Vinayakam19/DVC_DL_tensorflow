@@ -1,0 +1,73 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/stage_01_load_save.py --config=config/config.yaml
+    deps:
+    - path: config/config.yaml
+      md5: 2f19b2c1511a112ca7657376576375f5
+      size: 457
+    - path: src/stage_01_load_save.py
+      md5: 6821f63a9f377f3026c898724892032d
+      size: 1675
+    - path: src/utils/all_utils.py
+      md5: 2b0802747ff7252b81864dd921a61ce4
+      size: 871
+    outs:
+    - path: data
+      md5: a52ad4b30715598bfd754e3e9c51ef2c.dir
+      size: 37934943
+      nfiles: 277
+  prepare_callbacks:
+    cmd: python src/stage_03_prepare_callbacks.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: config/config.yaml
+      md5: 2f19b2c1511a112ca7657376576375f5
+      size: 457
+    - path: params.yaml
+      md5: 82160aaf04677e26994fdfaad1cd1695
+      size: 120
+    - path: src/stage_03_prepare_callbacks.py
+      md5: f1eaa6a9776eee6582920d1a73544217
+      size: 1732
+    - path: src/utils/all_utils.py
+      md5: 2b0802747ff7252b81864dd921a61ce4
+      size: 871
+    - path: src/utils/callbacks.py
+      md5: 6b39fc7797188a09f89615df78577f7b
+      size: 1646
+    outs:
+    - path: artifacts/callbacks/checkpoint_cb.cb
+      md5: b0566bec1f89fe6146dc5b0c85d1a6ee
+      size: 685
+    - path: artifacts/callbacks/tensorboard_cb.cb
+      md5: d475c4d211e1fbd93d86012837eda4c0
+      size: 664
+  prepare_base_model:
+    cmd: python src/stage_02_prepare_base_model.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: config/config.yaml
+      md5: 2f19b2c1511a112ca7657376576375f5
+      size: 457
+    - path: src/stage_02_prepare_base_model.py
+      md5: 7c5827e30a69c344a0937d1dd00a2df0
+      size: 2289
+    - path: src/utils/all_utils.py
+      md5: 2b0802747ff7252b81864dd921a61ce4
+      size: 871
+    - path: src/utils/model.py
+      md5: a40a20a6495748b37fc1d9fd1e7c533b
+      size: 1777
+    params:
+      params.yaml:
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        LEARNING_RATE: 0.001
+    outs:
+    - path: artifacts/base_model/VGG16_base_model.h5
+      md5: 5f720fecfef27fe2d86ebddf3848b92b
+      size: 58920272
+    - path: artifacts/base_model/updated_VGG16_base_model.h5
+      md5: e11d0250df2617bee9897a1388c1dbb7
+      size: 59132008
