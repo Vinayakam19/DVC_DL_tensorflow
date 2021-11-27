@@ -1,6 +1,7 @@
 import yaml
 import os
 import json
+import time
 
 def read_yaml(path_to_yaml: str) -> dict:
     with open(path_to_yaml) as yaml_file:
@@ -19,4 +20,9 @@ def save_local_df(data, data_path, index_status=False):
 def save_reports(report: dir, report_path: str, indentation = 4):
     with open(report_path, "w") as f:
         json.dump(report, f, indent = indentation)
-    print(f"reports are saved at {report_path}") 
+    print(f"reports are saved at {report_path}")
+    
+def get_timestamp(name):
+    timestamp = time.asctime().replace(" ", "_").replace(":", "_")
+    unique_name = f"{name}_at_{timestamp}"
+    return unique_name 
