@@ -13,7 +13,7 @@ stages:
     deps: 
       - src/stage_02_prepare_base_model.py
       - src/utils/all_utils.py
-      - src/utils/models.py
+      - src/utils/model.py
       - config/config.yaml
     params:
       - IMAGE_SIZE
