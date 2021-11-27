@@ -11,10 +11,10 @@ def create_and_save_tensorboard_callback(callbacks_dir, tensorboard_log_dir):
     """
     unique_name = get_timestamp('tb_logs')
     tb_running_log_dir = os.path.join(tensorboard_log_dir, unique_name)
-    tensorboard_callbacks = tf.keras.callbacks.TensorBoard(log_dir = tb_running_log_dir)
+    tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir = tb_running_log_dir)
     
     tb_callback_filepath = os.path.join(callbacks_dir, 'tensorboard_callback.cb')
-    joblib.dump(tensorboard_callbacks, tb_callback_filepath)
+    joblib.dump(tensorboard_callback, tb_callback_filepath)
     logging.info('Saved tensorboard callback to {}'.format(tb_callback_filepath))
 
 def create_and_save_checkpoint_callback(callbacks_dir, checkpoint_dir):
@@ -28,13 +28,16 @@ def create_and_save_checkpoint_callback(callbacks_dir, checkpoint_dir):
     joblib.dump(checkpoint_callback, ckpt_callback_filepath)
     logging.info('Saved checkpoint callback to {}'.format(ckpt_callback_filepath))
     
-def get_callbacks(callbacks_dir_path):
-    
-    callback_path = [os.path.join(callbacks_dir_path, bin_file) for bin_file  in os.listdir(callbacks_dir_path) if bin_file.endswith('.cb')]
-    
-    callbacks = [joblib.load(path) for path in callback_path]
-    
-    logging.info('Loaded {} callbacks from {}'.format(len(callbacks), callbacks_dir_path))
-    
-    return callbacks 
+def get_callbacks(callback_dir_path):
 
+    callback_path = [
+        os.path.join(callback_dir_path, bin_file) for bin_file in os.listdir(callback_dir_path) if bin_file.endswith(".cb")
+    ]
+
+    callbacks = [
+        joblib.load(path) for path in callback_path
+    ]
+
+    logging.info(f"saved callbacks are loaded from {callback_dir_path}")
+
+    return callbacks
